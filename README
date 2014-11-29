@@ -1,0 +1,185 @@
+Getting Started
+===============
+
+First thing to install is dexy:
+
+    $ easy_install dexy
+
+Or, using PIP:
+
+    $ pip install dexy
+
+If you want to produce output in HTML format, docutils is also required to be 
+installed:
+
+    $ easy_install docutils
+
+Or, using PIP:
+
+    $ pip install docutils
+
+If you want to make .mobi books with Calibre go install that:
+
+http://calibre-ebook.com/
+
+If you're on Mac OS X, you'll also need to do this:
+http://manual.calibre-ebook.com/cli/cli-index.html
+
+Once you have those, try this:
+
+  $ dexy setup
+  $ dexy
+
+Edit the Makefile and you can set a server to rsync the files to it for hosting
+with:
+
+  $ make sync
+
+Make the book again and check the resulting PDF to see your title.
+
+Enabling Calibre Support
+========================
+
+You can use Calibre to make a mobi by simply uncommenting the stanzas for it in the
+dexy.yaml, and then adding similar |pn lines for the code you have in your other
+format outputs.  See my png-code stanza in my dexy.yaml for an exmaple.
+
+On OSX you need to do this so dexy finds the tools for the OSX Calibre
+install:
+
+    export PATH=$PATH:/Applications/calibre.app/Contents/MacOS
+
+
+Structure And Initial Content
+=============================
+
+Now you can lay down your structure and introduction.  Here's what I suggest.
+
+1. Write a quick introduction in the introduction.rst to get your feeling down.
+2. Write your preface.rst to give some personal stuff about you, why you're writing.
+3. Edit ex0.rst such that it teaches a total nobody how to install the needed gear.
+4. Edit ex1.rst such that it teaches a total nobody how to print out a bunch of stuff.
+5. Edit next.rst to explain where the student should go after finishing your book. 
+
+Once you have this you should have a basic feel for the book, and enough
+content to show it to some people.  Show it to a few folks and watch them try
+your exercises.  This will tell you if you've got it simple enough.
+
+
+Recommended Contents
+====================
+
+I recommend for your ex0.rst install instructions you focus on the following:
+
+1. Use just a simple editor like gedit, notepad+, or Textwrangler.  NO vim! NO emacs!
+2. Do *not* have them use git or other RCS tools. They're here to learn code, not git.
+3. Make it work for Windows, OSX, and Linux if you can.
+4. The install of your language should not involve tons of steps.
+
+For your introduction, and for the whole rest of the book, remember these
+points:
+
+1. Your book should *educate* people, not *indoctrinate* them.  If you find
+   yourself talking constantly about how awesome your language is and how it will
+   change their life, then you're not educating, you're just making another cult
+   follower.  Leave the decision of whether the language is good to the reader.
+2. Read through my Introduction and give advice for learning, especially persistence and
+   how the book is *supposed* to be hard and tedious at first.
+3. Be honest about flaws and problems in your language so the reader is not discouraged
+   when they encounter them.
+4. Lightly make fun of programmers and inoculate your student against religious wars
+   over syntax, idioms, editors, tools, and anything else that gets in the way of them 
+   learning.  Remember, you are writing this book for *them*, not your fellow coder 
+   friends.
+5. Make it clear that programmers are not scary geniuses.  This goes a long way to
+   encourage your readers to try to learn as it will reduce their "code anxiety".
+
+
+Working With Dexy
+=================
+
+Dexy is stable and getting close to a 1.0 release so it should be reliable, but
+contact the author with any problems you hit or me.  What it does is take code
+for your exercises and then injects it into your .rst files in a nice pretty
+printed format that's publication ready.  I've created some handy Jinja macros
+under the macros/ork.jinja file (which comes from a small side project I have
+called Orkestrix at http://orkestrix.org/).
+
+You use it all like this:
+
+1. Edit the dexy.yaml file and put your language extension in there like I've got.
+   The syntax is FILENAME_PATTERN|FILTER1|FILTER2, etc.  For mine, I'm mostly using
+   the pyg(pygmentize) filter.  For python, it looks like this: .py|pyg|l.  .py (or *.py)
+   is the pattern of files to convert, pyg is the pygmentize filter for highlting code
+   and "l" is the filter for converting to LaTex.  You'll also need another stanza for
+   the |h code to get HTML, but look at my example to see.
+2. Put your code for each exercise in code/ named after each exercise.
+3. Look at the ex0.rst that I've written which shows you how to include this code.
+4. Finally, if you want to show the output of your programs, there are two ways
+   to do this.  If you want to use dexy, you can create another entry in dexy.yaml
+   like this: ".py|py|pyg|l".  This means, run the code through python (py), then
+   pass the result to pyg (if you are generating HTML or xml or whatever it will
+   be highlighted), and finally, pass to the LaTeX filter.  The other low
+   tech way is simply to put the output for each program into code as ex#.txt and
+   include that as well. ex0.rst has both.
+
+Refer to http://dexy.it for more information on how to use it.
+
+
+Working With rST
+================
+
+If you do wiki markup of any kind then rST is just a more strict 
+form of that.  It handles a greater number of common programmer
+needs and actually gives you errors for things that are wrong.
+This may be annoying at first but you'll get used to having it
+be more strict.
+
+You can read these to find out about rST:
+
+http://docutils.sourceforge.net/docs/user/rst/quickstart.html
+http://docutils.sourceforge.net/docs/user/rst/quickref.html
+http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html
+
+
+Last Steps
+==========
+
+Once you've got your voice and initial setup, I recommend that you go through
+and setup all the titles and the big structure of your book.  Look at LPTHW to
+get a general idea of a good structure.  Here it is in a short form:
+
+1. Two sections split at 26 exercises.
+2. First half is repetitive interactions with the computer that are immediate, with heavy
+   focus on functions and no objects, complex data structures, algorithms, or math.
+3. Second half is a sudden ramp-up in difficulty that teaches logic, OOP, data structures,
+   and the more complex things your language features.
+4. Focus on simple rstt adventure games as the main kind of program they make.  These are
+   fun, easy to create, immediate, and don't require any special geometry skills or graphics
+   systems.
+
+The way to think of the book's structure is the first half gets them strong,
+the second half gets them skills.  In the first half they're just doing
+push-ups and sit-ups and getting used to your language's basic syntax and
+symbols.  In the second half they use this strength and grounding in the
+basics to start learning more advanced techniques and concepts, then apply
+them to real problems.
+
+I recommend that you create a single rstt file and make a basic outline of all
+your chapter titles to get an idea of your structure.  Once you've got that
+kind of thought out, go through and fill in each of the ex#.rst files with the
+titles and a short note on what you plan to teach there.  This will turn the
+book into an easy to follow TODO list of what to write.
+
+Then, just go through and write each one in order and change later ones as you
+go in new directions.  Don't be a slave to your structure, but having one helps
+keep you motivated and organized.
+
+
+Publishing Your Book
+====================
+
+If you want help publishing or promoting your book, then contact me at
+help@learncodethehardway.org.
+
+
